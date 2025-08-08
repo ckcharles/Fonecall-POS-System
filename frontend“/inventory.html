@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventory - Fonecall POS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-5 bg-light">
+  <div class="container bg-white p-4 rounded shadow">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-success">Fonecall</h2>
+      <nav>
+        <a href="index.html" class="me-3 text-secondary text-decoration-none">Sales</a>
+        <a href="#" class="me-3 fw-bold text-success text-decoration-none">Inventory</a>
+        <a href="reports.html" class="text-secondary text-decoration-none">Reports</a>
+      </nav>
+    </header>
+    <h4>Inventory Management</h4>
+    <p>Display and manage product stock levels here.</p>
+    <ul id="inventory-list" class="list-group"></ul>
+    <script>
+      fetch('http://localhost:5000/api/products')
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('inventory-list');
+          data.forEach(p => {
+            const item = document.createElement('li');
+            item.className = "list-group-item d-flex justify-content-between align-items-center";
+            item.innerHTML = \`\${p.name} (\${p.category}) <span class="badge bg-success rounded-pill">Stock: \${p.stock}</span>\`;
+            list.appendChild(item);
+          });
+        });
+    </script>
+  </div>
+</body>
+</html>
